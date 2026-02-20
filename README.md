@@ -6,6 +6,7 @@ This repository now contains a practical starting point:
 
 - A baseline stereo → 5.1 upmix engine (rule-based DSP, no ML dependency)
 - A CLI to process WAV files end-to-end
+- A stateful streaming upmixer API for real-time chunk processing
 - Tests validating output format and core behavior
 - An MVP architecture and product plan document
 
