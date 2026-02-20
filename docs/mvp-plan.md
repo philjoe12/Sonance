@@ -9,6 +9,7 @@ Users with surround systems and spatial-audio headphones will pay for clearly be
 - Baseline matrix + DSP upmix engine
 - Fixed 5.1 layout for evaluation
 - Offline WAV pipeline for deterministic testing
+- Shared streaming DSP core used by both offline and real-time paths
 
 ## Phase 1 (desktop beta)
 

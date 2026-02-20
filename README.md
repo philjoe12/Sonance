@@ -69,3 +69,15 @@ python -m unittest discover -s tests -p 'test_*.py' -v
 ## Next steps
 
 See [`docs/mvp-plan.md`](docs/mvp-plan.md) for the staged build plan from this baseline to a low-latency AI spatial engine.
+
+
+## Streaming API quick example
+
+```python
+from sonance import StreamingUpmixer, UpmixConfig
+
+upmixer = StreamingUpmixer(sample_rate=48000, config=UpmixConfig())
+out_5_1_samples = upmixer.process_interleaved_stereo(in_stereo_samples)
+```
+
+Use this path for chunked callback-style processing in a desktop audio pipeline.

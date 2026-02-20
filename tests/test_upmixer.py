@@ -5,6 +5,7 @@ import tempfile
 import unittest
 import wave
 
+from sonance import StreamingUpmixer as ExportedStreamingUpmixer
 from sonance.upmixer import StreamingUpmixer, UpmixConfig, upmix_stereo_wav_to_5_1
 
 
@@ -102,6 +103,11 @@ class UpmixerTests(unittest.TestCase):
         proc = StreamingUpmixer(sample_rate=48000)
         with self.assertRaises(ValueError):
             proc.process_interleaved_stereo([1, 2, 3])
+
+    def test_package_export_streaming_upmixer(self) -> None:
+        proc = ExportedStreamingUpmixer(sample_rate=48000)
+        out = proc.process_interleaved_stereo([100, -100, 50, -50])
+        self.assertEqual(len(out), 12)
 
 
 if __name__ == "__main__":

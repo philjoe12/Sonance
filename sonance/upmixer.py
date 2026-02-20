@@ -62,6 +62,9 @@ def _one_pole_lowpass(current: float, prev: float, alpha: float) -> float:
     return prev + alpha * (current - prev)
 
 
+InterleavedStereoSamples = list[int] | tuple[int, ...]
+
+
 class StreamingUpmixer:
     """Stateful stereo-to-5.1 processor for chunked/real-time pipelines.
 
@@ -87,9 +90,11 @@ class StreamingUpmixer:
         self._alpha = dt / (rc + dt)
         self._lfe_state = 0.0
 
-    def process_interleaved_stereo(self, stereo_samples: list[int] | tuple[int, ...]) -> list[int]:
+    def process_interleaved_stereo(self, stereo_samples: InterleavedStereoSamples) -> list[int]:
         if len(stereo_samples) % 2 != 0:
             raise ValueError("stereo_samples length must be even (interleaved L/R).")
+        if len(stereo_samples) == 0:
+            return []
 
         cfg = self.config
         out: list[int] = []
