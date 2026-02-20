@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 import struct
 import wave
 
@@ -21,6 +22,34 @@ _MAX_INT16 = 32767
 _MIN_INT16 = -32768
 
 
+def _validate_config(cfg: UpmixConfig) -> None:
+    numeric_fields = {
+        "center_gain": cfg.center_gain,
+        "lfe_gain": cfg.lfe_gain,
+        "surround_gain": cfg.surround_gain,
+        "surround_delay_ms": cfg.surround_delay_ms,
+        "stereo_preserve_gain": cfg.stereo_preserve_gain,
+        "lfe_lowpass_hz": cfg.lfe_lowpass_hz,
+    }
+
+    for field_name, value in numeric_fields.items():
+        if not math.isfinite(value):
+            raise ValueError(f"{field_name} must be a finite number.")
+
+    if cfg.center_gain < 0.0:
+        raise ValueError("center_gain must be >= 0.")
+    if cfg.lfe_gain < 0.0:
+        raise ValueError("lfe_gain must be >= 0.")
+    if cfg.surround_gain < 0.0:
+        raise ValueError("surround_gain must be >= 0.")
+    if cfg.stereo_preserve_gain < 0.0:
+        raise ValueError("stereo_preserve_gain must be >= 0.")
+    if cfg.surround_delay_ms < 0.0:
+        raise ValueError("surround_delay_ms must be >= 0.")
+    if cfg.lfe_lowpass_hz <= 0.0:
+        raise ValueError("lfe_lowpass_hz must be > 0.")
+
+
 def _clamp_int16(value: float) -> int:
     if value > _MAX_INT16:
         return _MAX_INT16
@@ -39,6 +68,7 @@ def upmix_stereo_wav_to_5_1(input_path: str, output_path: str, config: UpmixConf
     Output channel order: L, R, C, LFE, Ls, Rs.
     """
     cfg = config or UpmixConfig()
+    _validate_config(cfg)
 
     with wave.open(input_path, "rb") as reader:
         channels = reader.getnchannels()

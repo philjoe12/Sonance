@@ -38,6 +38,8 @@ This means no Spotify API integration is required. Sonance acts like a system au
 
 See [`docs/system-architecture.md`](docs/system-architecture.md) for detailed signal flow, device handling, and customer UX.
 
+See [`docs/constraints-register.md`](docs/constraints-register.md) for additional delivery, legal, reliability, and device-compatibility constraints.
+
 ## Why this starter
 
 Before building AI spatial reconstruction, you need a measurable baseline. This project gives you:

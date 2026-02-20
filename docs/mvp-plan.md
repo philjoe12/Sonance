@@ -35,3 +35,14 @@ Users with surround systems and spatial-audio headphones will pay for clearly be
 - Latency: <= 20 ms
 - CPU budget: <= 15% on mainstream desktop CPU
 - Subjective lift: users prefer Sonance to AVR upmix in blind A/B
+
+
+## Delivery constraints (must-pass before broader rollout)
+
+- Driver install success rate must stay high enough for self-serve onboarding.
+- Routing reliability across sleep/wake and default-device changes must be verified.
+- Stereo pass-through fallback must trigger automatically on processing failure.
+- Hardware compatibility list should be explicit and phased by validated endpoint families.
+- Legal/compliance review must confirm local-only processing posture and provider-safe messaging.
+
+See [`docs/constraints-register.md`](constraints-register.md) for detailed constraints and mitigations.
